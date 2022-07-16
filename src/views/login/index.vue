@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     onClickLeft () {
-      this.$toast('返回')
+      this.$router.push('/profile')
     },
     async login () {
       this.$toast.loading({
