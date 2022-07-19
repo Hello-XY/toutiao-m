@@ -5,7 +5,6 @@ import store from './store'
 import '@/assets/fonts/iconfont.css'
 import Vant from 'vant'
 import 'vant/lib/index.css'
-
 import 'amfe-flexible/index'
 
 Vue.config.productionTip = false
@@ -13,5 +12,5 @@ Vue.use(Vant)
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App)
 }).$mount('#app')
