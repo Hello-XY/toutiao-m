@@ -34,7 +34,7 @@ export default {
       /* 搜索建议列表 */
       searchResultList: [],
       page: 1,
-      perPage: 20
+      perPage: 15
     }
   },
   created () {

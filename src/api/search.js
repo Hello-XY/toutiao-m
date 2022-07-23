@@ -21,10 +21,3 @@ export const searchResult = (q, perPage, page) => {
     params: { q, per_page: perPage, page }
   })
 }
-
-/* 获取新闻详情 */
-/* export const NewsDetail = () => {
-  return request({
-    url: '/v1_0/articles/:article_id'
-  })
-} */

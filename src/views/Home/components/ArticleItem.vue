@@ -4,11 +4,13 @@
       v-if="articlesInfo.cover.type === 0"
       :title="articlesInfo.title"
       :label="articleDesc"
+      :to="`/detail/${articleId}`"
     />
     <van-cell
       v-if="articlesInfo.cover.type === 1"
       :title="articlesInfo.title"
       :label="articleDesc"
+      :to="`/detail/${articleId}`"
     >
       <van-image
         width="3rem"
@@ -16,14 +18,18 @@
         :src="articlesInfo.cover.images[0]"
       />
     </van-cell>
-    <van-cell v-if="articlesInfo.cover.type === 3" :title="articlesInfo.title">
+    <van-cell
+      v-if="articlesInfo.cover.type === 3"
+      :title="articlesInfo.title"
+      :to="`/detail/${articleId}`"
+    >
       <template #label>
         <div>
           <van-image
             width="3rem"
             height="2rem"
-            v-for="item in articlesInfo.cover.images"
-            :key="item"
+            v-for="(item, index) in articlesInfo.cover.images"
+            :key="index"
             :src="item"
           />
         </div>
@@ -39,6 +45,10 @@ export default {
   props: {
     articlesInfo: {
       type: Object,
+      required: true
+    },
+    articleId: {
+      type: String,
       required: true
     }
   },

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <van-pull-refresh v-model="isLoading" @refresh="onLoad" success-text='刷新成功'>
+    <van-pull-refresh
+      v-model="isLoading"
+      @refresh="onLoad"
+      success-text="刷新成功"
+    >
       <van-list
         @load="onLoad"
         :immediate-check="false"
@@ -14,6 +18,7 @@
           v-for="item in articlesList"
           :key="item.art_id"
           :articlesInfo="item"
+          :articleId='item.art_id'
         ></ArticleItem>
       </van-list>
     </van-pull-refresh>
