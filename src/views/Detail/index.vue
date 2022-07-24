@@ -54,29 +54,21 @@
       <van-divider>正文结束</van-divider>
       <!-- 用户信息 -->
       <!-- 评论区 -->
-      <CommentContent :id="newsDetailContent.art_id" />
+      <FirstLeveCommentContent :id="newsDetailContent.art_id" ref="onLoad" />
       <!-- 评论区 -->
-      <!-- 发布评论栏 -->
-      <van-popup v-model="show" position="bottom" :style="{ height: '120px' }">
-        <van-field
-          v-model="message"
-          rows="2"
-          autosize
-          label="留言"
-          type="textarea"
-          maxlength="50"
-          placeholder="请输入留言"
-          show-word-limit
-        >
-          <template #button>
-            <button>发布</button>
-          </template>
-        </van-field>
+      <!-- 评论文本框 -->
+      <van-popup
+        v-model="show"
+        position="bottom"
+        @isShow="showFn"
+        :style="{ height: '120px' }"
+      >
+        <CommentTextBox @addComment="addCommentFn" />
       </van-popup>
-      <!-- 发布评论栏 -->
+      <!-- 评论文本框 -->
     </div>
     <van-tabbar placeholder style="height: 44px">
-      <van-tabbar-item class="comment-btn" @click="show = !show">
+      <van-tabbar-item class="comment-btn" @click="showFn">
         <div>写评论</div>
       </van-tabbar-item>
       <van-tabbar-item icon="comment-o" :badge="totalCount"></van-tabbar-item>
@@ -118,12 +110,15 @@ import {
   addLike,
   removeLike,
   addCollection,
-  removeCollection
+  removeCollection,
+  addComment
 } from '@/api'
-import CommentContent from './components/CommentContent.vue'
+import FirstLeveCommentContent from './components/FirstLeveCommentContent.vue'
+import CommentTextBox from './components/CommentTextBox.vue'
 export default {
   components: {
-    CommentContent
+    FirstLeveCommentContent,
+    CommentTextBox
   },
   data () {
     return {
@@ -209,6 +204,23 @@ export default {
         this.newsDetailContent.is_collected =
           !this.newsDetailContent.is_collected
       } catch (error) {
+        this.$toast.fail('网络状态不稳定，请稍后再试')
+      }
+    },
+    /* 控制弹出层 */
+    showFn () {
+      console.log('show')
+      this.show = !this.show
+    },
+    /* 发表对文章的评论 */
+    async addCommentFn (message) {
+      try {
+        await addComment(this.$route.params.article_id, message)
+        this.$refs.onLoad.onLoad(1)
+        this.$toast.success('发表评论成功')
+        this.show = !this.show
+      } catch (error) {
+        console.log(error)
         this.$toast.fail('网络状态不稳定，请稍后再试')
       }
     }
