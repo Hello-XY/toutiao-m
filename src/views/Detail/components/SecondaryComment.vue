@@ -171,6 +171,11 @@ export default {
   methods: {
     /* 获取评论列表 */
     async onLoad (fromIndex) {
+      if (fromIndex === 1) {
+        this.getCommentsList = []
+        this.daysFromNow = []
+        this.offset = ''
+      }
       try {
         const { data } = await getComments(
           this.type,
@@ -178,10 +183,6 @@ export default {
           this.offset,
           this.limit
         )
-        if (fromIndex === 1) {
-          this.getCommentsList = []
-          this.daysFromNow = []
-        }
         this.getCommentsList.push(...data.data.results)
         const pubdate = data.data.results
         // console.log(data.data)
